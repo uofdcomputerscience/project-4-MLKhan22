@@ -11,6 +11,8 @@ import GameplayKit
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
+    var viewController: UIViewController?
+    
     var score = 0
     var char:Character = Character()
     var down = SKSpriteNode()
@@ -18,6 +20,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var right = SKSpriteNode()
     var left = SKSpriteNode()
     var X = SKSpriteNode()
+    var help = SKSpriteNode()
     
     var energy = SKSpriteNode()
     var over = SKSpriteNode()
@@ -199,6 +202,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         status = self.childNode(withName: "status") as! SKSpriteNode
         energy = self.childNode(withName: "energy") as! SKSpriteNode
         over = self.childNode(withName: "over") as! SKSpriteNode
+        help = self.childNode(withName: "help") as! SKSpriteNode
         X = self.childNode(withName: "X") as! SKSpriteNode
         down = self.childNode(withName: "down") as! SKSpriteNode
         up = self.childNode(withName: "up") as! SKSpriteNode
@@ -232,8 +236,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         stats.position = CGPoint(x: 0, y: energy.position.y + 30)
         self.addChild(stats)
 
-        X.size = CGSize(width: 40, height: 50)
-        X.position = CGPoint(x: self.size.width/4, y: -self.size.height/4)
+        help.size = CGSize(width: 60, height: 60)
+        help.position = CGPoint(x: self.size.width/3, y: -self.size.height/2.5)
+        
+        X.size = CGSize(width: 60, height: 60)
+        X.position = CGPoint(x: self.size.width/4, y: -self.size.height/4.5)
        
         down.size = CGSize(width: 40, height: 60)
         down.position = CGPoint(x: -self.size.width/4, y: -self.size.height/4)
@@ -305,6 +312,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
         }
 
+    }
+    
+    func showHelp(){
+        self.viewController!.performSegue(withIdentifier: "help", sender: viewController)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -454,6 +465,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 {
                     char.run(SKAction.repeatForever(SKAction.animate(with: standTextures, timePerFrame: 1)))
                     char.def = 0
+                }
+                if name == "help"
+                {
+                    showHelp()
                 }
             }
             

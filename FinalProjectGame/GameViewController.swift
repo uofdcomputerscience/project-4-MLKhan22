@@ -14,6 +14,7 @@ class GameViewController: UIViewController {
     
     var SKViewSize: CGSize?
     var SKViewSizeRect: CGRect?
+    var helpView: HelpView?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,10 +24,11 @@ class GameViewController: UIViewController {
 //            let skView = self.view as! SKView
 //            SKViewSize = skView.bounds.size
 //            let scene = GameScene(size: SKViewSize!)
-            if let scene = SKScene(fileNamed: "GameScene") {
+            if let scene = GameScene(fileNamed: "GameScene") {
                 // Set the scale mode to scale to fit the window
                 //scene.scaleMode = .aspectFill
                 // Present the scene
+                scene.viewController = self
                 view.presentScene(scene)
             }
 //            scene.scaleMode = .aspectFill

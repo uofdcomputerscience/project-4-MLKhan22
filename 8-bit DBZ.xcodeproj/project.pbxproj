@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BA0FE99623AAE64700B38DFC /* HelpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA0FE99523AAE64700B38DFC /* HelpView.swift */; };
 		BA6CE58523A8A10E0092FB2B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA6CE58423A8A10E0092FB2B /* AppDelegate.swift */; };
 		BA6CE58723A8A10E0092FB2B /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = BA6CE58623A8A10E0092FB2B /* GameScene.sks */; };
 		BA6CE58923A8A10E0092FB2B /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = BA6CE58823A8A10E0092FB2B /* Actions.sks */; };
@@ -16,11 +17,10 @@
 		BA6CE59223A8A1100092FB2B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BA6CE59123A8A1100092FB2B /* Assets.xcassets */; };
 		BA6CE59523A8A1100092FB2B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BA6CE59323A8A1100092FB2B /* LaunchScreen.storyboard */; };
 		BA6CE59D23A8DA2C0092FB2B /* Character.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA6CE59C23A8DA2C0092FB2B /* Character.swift */; };
-		BA6CE59F23A8EE700092FB2B /* Boundary.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA6CE59E23A8EE700092FB2B /* Boundary.swift */; };
-		BA6CE5A123A8F1770092FB2B /* Background.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA6CE5A023A8F1770092FB2B /* Background.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		BA0FE99523AAE64700B38DFC /* HelpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpView.swift; sourceTree = "<group>"; };
 		BA6CE58123A8A10E0092FB2B /* 8-bit DBZ.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "8-bit DBZ.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA6CE58423A8A10E0092FB2B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BA6CE58623A8A10E0092FB2B /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -32,8 +32,6 @@
 		BA6CE59423A8A1100092FB2B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		BA6CE59623A8A1100092FB2B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BA6CE59C23A8DA2C0092FB2B /* Character.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Character.swift; sourceTree = "<group>"; };
-		BA6CE59E23A8EE700092FB2B /* Boundary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Boundary.swift; sourceTree = "<group>"; };
-		BA6CE5A023A8F1770092FB2B /* Background.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Background.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,9 +69,8 @@
 				BA6CE58823A8A10E0092FB2B /* Actions.sks */,
 				BA6CE58A23A8A10E0092FB2B /* GameScene.swift */,
 				BA6CE58C23A8A10E0092FB2B /* GameViewController.swift */,
-				BA6CE59E23A8EE700092FB2B /* Boundary.swift */,
-				BA6CE5A023A8F1770092FB2B /* Background.swift */,
 				BA6CE58E23A8A10E0092FB2B /* Main.storyboard */,
+				BA0FE99523AAE64700B38DFC /* HelpView.swift */,
 				BA6CE59123A8A1100092FB2B /* Assets.xcassets */,
 				BA6CE59323A8A1100092FB2B /* LaunchScreen.storyboard */,
 				BA6CE59623A8A1100092FB2B /* Info.plist */,
@@ -158,9 +155,8 @@
 				BA6CE58B23A8A10E0092FB2B /* GameScene.swift in Sources */,
 				BA6CE58D23A8A10E0092FB2B /* GameViewController.swift in Sources */,
 				BA6CE58523A8A10E0092FB2B /* AppDelegate.swift in Sources */,
+				BA0FE99623AAE64700B38DFC /* HelpView.swift in Sources */,
 				BA6CE59D23A8DA2C0092FB2B /* Character.swift in Sources */,
-				BA6CE59F23A8EE700092FB2B /* Boundary.swift in Sources */,
-				BA6CE5A123A8F1770092FB2B /* Background.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
