@@ -52,7 +52,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var fullAtlas = SKTextureAtlas()
     var sAtlas = SKTextureAtlas()
+    
     var bubbleAtlas = SKTextureAtlas()
+    var bubbleTextures = [SKTexture]()
     
     var atkAtlas = SKTextureAtlas()
     var atkTextures = [SKTexture]()
@@ -101,6 +103,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         atkAtlas = SKTextureAtlas(named: "Blast")
         let atk1 = atkAtlas.textureNamed("sprite_blast0.png")
         let atk2 = atkAtlas.textureNamed("sprite_blast1.png")
+        
+        bubbleAtlas = SKTextureAtlas(named: "Bubble")
+        for i in 0...bubbleAtlas.textureNames.count-1{
+            let Name = "sprite_bubble\(i).png"
+            bubbleTextures.append(SKTexture(imageNamed: Name))
+        }
         
         walkTextures.append(f1)
         walkTextures.append(f3)
@@ -474,6 +482,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let number = Int.random(in: 1 ..< 60)
         if number < 30 && children.count < 30{
             let bubble = SKSpriteNode(imageNamed: "sprite_bubble0.png")
+            bubble.run(SKAction.repeatForever(SKAction.animate(with: bubbleTextures, timePerFrame: 0.3)))
             bubble.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width:50, height:50))
             bubble.name = "bubble"
             bubble.zPosition = 6

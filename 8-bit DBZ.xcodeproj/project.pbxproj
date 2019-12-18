@@ -21,7 +21,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		BA6CE58123A8A10E0092FB2B /* FinalProjectGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FinalProjectGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		BA6CE58123A8A10E0092FB2B /* 8-bit DBZ.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "8-bit DBZ.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA6CE58423A8A10E0092FB2B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BA6CE58623A8A10E0092FB2B /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
 		BA6CE58823A8A10E0092FB2B /* Actions.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Actions.sks; sourceTree = "<group>"; };
@@ -58,7 +58,7 @@
 		BA6CE58223A8A10E0092FB2B /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				BA6CE58123A8A10E0092FB2B /* FinalProjectGame.app */,
+				BA6CE58123A8A10E0092FB2B /* 8-bit DBZ.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -85,9 +85,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		BA6CE58023A8A10E0092FB2B /* FinalProjectGame */ = {
+		BA6CE58023A8A10E0092FB2B /* 8-bit DBZ */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = BA6CE59923A8A1100092FB2B /* Build configuration list for PBXNativeTarget "FinalProjectGame" */;
+			buildConfigurationList = BA6CE59923A8A1100092FB2B /* Build configuration list for PBXNativeTarget "8-bit DBZ" */;
 			buildPhases = (
 				BA6CE57D23A8A10E0092FB2B /* Sources */,
 				BA6CE57E23A8A10E0092FB2B /* Frameworks */,
@@ -97,9 +97,9 @@
 			);
 			dependencies = (
 			);
-			name = FinalProjectGame;
+			name = "8-bit DBZ";
 			productName = FinalProjectGame;
-			productReference = BA6CE58123A8A10E0092FB2B /* FinalProjectGame.app */;
+			productReference = BA6CE58123A8A10E0092FB2B /* 8-bit DBZ.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -117,7 +117,7 @@
 					};
 				};
 			};
-			buildConfigurationList = BA6CE57C23A8A10E0092FB2B /* Build configuration list for PBXProject "FinalProjectGame" */;
+			buildConfigurationList = BA6CE57C23A8A10E0092FB2B /* Build configuration list for PBXProject "8-bit DBZ" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -130,7 +130,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				BA6CE58023A8A10E0092FB2B /* FinalProjectGame */,
+				BA6CE58023A8A10E0092FB2B /* 8-bit DBZ */,
 			);
 		};
 /* End PBXProject section */
@@ -312,8 +312,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.first.FinalProjectGame;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.first.DBZPop;
+				PRODUCT_NAME = "8-bit DBZ";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -331,8 +331,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.first.FinalProjectGame;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.first.DBZPop;
+				PRODUCT_NAME = "8-bit DBZ";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -341,7 +341,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		BA6CE57C23A8A10E0092FB2B /* Build configuration list for PBXProject "FinalProjectGame" */ = {
+		BA6CE57C23A8A10E0092FB2B /* Build configuration list for PBXProject "8-bit DBZ" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				BA6CE59723A8A1100092FB2B /* Debug */,
@@ -350,7 +350,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		BA6CE59923A8A1100092FB2B /* Build configuration list for PBXNativeTarget "FinalProjectGame" */ = {
+		BA6CE59923A8A1100092FB2B /* Build configuration list for PBXNativeTarget "8-bit DBZ" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				BA6CE59A23A8A1100092FB2B /* Debug */,
