@@ -20,7 +20,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var X = SKSpriteNode()
     
     var energy = SKSpriteNode()
+    var over = SKSpriteNode()
     var status = SKSpriteNode()
+    var scoreLabel: SKLabelNode!
+    var stats: SKLabelNode!
     
     var bg = SKSpriteNode()
     var leftB = SKSpriteNode()
@@ -48,11 +51,28 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var beamTextures2 = [SKTexture]()
     
     var fullAtlas = SKTextureAtlas()
+    var sAtlas = SKTextureAtlas()
+    var bubbleAtlas = SKTextureAtlas()
     
     var atkAtlas = SKTextureAtlas()
     var atkTextures = [SKTexture]()
     var jumpTextures = [SKTexture]()
     var fallTextures = [SKTexture]()
+    
+    var standTexturesS = [SKTexture]()
+    var walkTexturesS = [SKTexture]()
+    var backTexturesS = [SKTexture]()
+    var forwardTexturesS = [SKTexture]()
+    var defTexturesS = [SKTexture]()
+    var defTextures2S = [SKTexture]()
+    var chargeTexturesS = [SKTexture]()
+    var blastTextures1S = [SKTexture]()
+    var blastTextures2S = [SKTexture]()
+    var beamTextures1S = [SKTexture]()
+    var beamTextures2S = [SKTexture]()
+    var atkTexturesS = [SKTexture]()
+    var jumpTexturesS = [SKTexture]()
+    var fallTexturesS = [SKTexture]()
     
     override func didMove(to view: SKView) {
         physicsWorld.contactDelegate = self
@@ -82,8 +102,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let atk1 = atkAtlas.textureNamed("sprite_blast0.png")
         let atk2 = atkAtlas.textureNamed("sprite_blast1.png")
         
-        
-        
         walkTextures.append(f1)
         walkTextures.append(f3)
         walkTextures.append(f4)
@@ -100,9 +118,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         chargeTextures.append(c3)
         
         blastTextures1.append(bl1)
-        blastTextures1.append(f1)
+        //blastTextures1.append(f1)
         blastTextures2.append(bl2)
-        blastTextures2.append(f1)
+        //blastTextures2.append(f1)
         beamTextures1.append(beam1)
         beamTextures2.append(beam2)
         
@@ -112,15 +130,67 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         jumpTextures.append(j1)
         fallTextures.append(fall1)
         
+        let sAtlas = SKTextureAtlas(named: "GokuS")
+        let sf1 = sAtlas.textureNamed("sprite_gokus14.png")
+        let sf3 = sAtlas.textureNamed("sprite_gokus01.png")
+        let sf4 = sAtlas.textureNamed("sprite_gokus02.png")
+        
+        let sd1 = sAtlas.textureNamed("sprite_gokus03.png")
+        let sd2 = sAtlas.textureNamed("sprite_gokus13.png")
+        
+        let sbl1 = sAtlas.textureNamed("sprite_gokus05.png")
+        let sbl2 = sAtlas.textureNamed("sprite_gokus06.png")
+        
+        let sbeam1 = sAtlas.textureNamed("sprite_gokus07.png")
+        let sbeam2 = sAtlas.textureNamed("sprite_gokus08.png")
+        
+        let sc1 = sAtlas.textureNamed("sprite_gokus09.png")
+        let sc2 = sAtlas.textureNamed("sprite_gokus10.png")
+        let sc3 = sAtlas.textureNamed("sprite_gokus11.png")
+        
+        let sj1 = sAtlas.textureNamed("sprite_gokus04.png")
+        let sfall1 = sAtlas.textureNamed("sprite_gokus12.png")
+        
+        let satk1 = atkAtlas.textureNamed("sprite_blasts0.png")
+        let satk2 = atkAtlas.textureNamed("sprite_blasts1.png")
+        
+        
+        walkTexturesS.append(sf1)
+        walkTexturesS.append(sf3)
+        walkTexturesS.append(sf4)
+        
+        standTexturesS.append(sf1)
+        backTexturesS.append(sf4)
+        forwardTexturesS.append(sf3)
+        
+        defTexturesS.append(sd1)
+        defTextures2S.append(sd2)
+        
+        chargeTexturesS.append(sc1)
+        chargeTexturesS.append(sc2)
+        chargeTexturesS.append(sc3)
+        
+        blastTextures1S.append(sbl1)
+        blastTextures2S.append(sbl2)
+        beamTextures1S.append(sbeam1)
+        beamTextures2S.append(sbeam2)
+        
+        atkTexturesS.append(satk1)
+        atkTexturesS.append(satk2)
+        
+        jumpTexturesS.append(sj1)
+        fallTexturesS.append(sfall1)
+        
         if let findChar:Character = self.childNode(withName: "character") as? Character {
             char = findChar
             char.position = CGPoint(x: -self.size.width/4, y: self.size.height/3)
             char.zPosition = 3
         }
         
-        let scoreLabel = self.childNode(withName: "score") as! SKLabelNode
+        
         status = self.childNode(withName: "status") as! SKSpriteNode
         energy = self.childNode(withName: "energy") as! SKSpriteNode
+        over = self.childNode(withName: "over") as! SKSpriteNode
         X = self.childNode(withName: "X") as! SKSpriteNode
         down = self.childNode(withName: "down") as! SKSpriteNode
         up = self.childNode(withName: "up") as! SKSpriteNode
@@ -136,8 +206,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         status.position = CGPoint(x: 0, y: self.size.height/10)
         energy.size = CGSize(width: self.size.width*2, height: 20)
         energy.position = CGPoint(x: -self.size.width/2, y: self.size.height/10)
+        over.size = CGSize(width: self.size.width*2, height: 20)
+        over.position = CGPoint(x: -self.size.width/2, y: energy.position.y + CGFloat(5))
         
-        scoreLabel.position = CGPoint(x: energy.position.x, y: energy.position.y - 20)
+        scoreLabel = SKLabelNode(fontNamed: "Bebas")
+        scoreLabel.name = "score"
+        scoreLabel.text = "Score: 0"
+        scoreLabel.fontColor = SKColor(red: 233/255, green: 157/255, blue: 20/255, alpha: 1)
+        scoreLabel.position = CGPoint(x: 0, y: energy.position.y - 40)
+        self.addChild(scoreLabel)
+        
+        stats = SKLabelNode(fontNamed: "Bebas")
+        stats.fontSize = 10
+        stats.name = "stats"
+        stats.text = "Energy: 1000/1000  |  Multiplier: 1"
+        stats.fontColor = SKColor(red: 233/255, green: 157/255, blue: 20/255, alpha: 1)
+        stats.position = CGPoint(x: 0, y: energy.position.y + 30)
+        self.addChild(stats)
 
         X.size = CGSize(width: 40, height: 50)
         X.position = CGPoint(x: self.size.width/4, y: -self.size.height/4)
@@ -164,8 +249,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         ceilB.position = CGPoint(x: 0,y: self.size.height/2)
         floorB.size = CGSize(width: 10, height: self.size.height)
         floorB.position = CGPoint(x: 0,y: self.size.height/4.5)
-        
-        
         
     }
     
@@ -233,12 +316,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 if name == "left" && char.charge == 0
                 {
                     char.run(SKAction.repeatForever(SKAction.animate(with: backTextures, timePerFrame: 1)))
-                    char.physicsBody!.velocity.dx = -70
+                    char.physicsBody!.velocity.dx = CGFloat(Float(-70*char.speedMult))
                 }
                 if name == "right" && char.charge == 0
                 {
                     char.run(SKAction.repeatForever(SKAction.animate(with: forwardTextures, timePerFrame: 1)))
-                    char.physicsBody!.velocity.dx = 70
+                    char.physicsBody!.velocity.dx = CGFloat(Float(70*char.speedMult))
                 }
                 if name == "down" && char.def == 0
                 {
@@ -259,7 +342,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let touch:UITouch = touches.first!
         let positionInScene = touch.location(in: self)
         let touchedNode = self.atPoint(positionInScene)
-
+        
         if char.jump == 0 && char.beamAnim == 0
         {
             char.run(SKAction.repeatForever(SKAction.animate(with: standTextures, timePerFrame: 1)))
@@ -276,15 +359,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                         char.blastAnim = 1
                         char.charge = 0
                         char.chargeVal = 0
-                        char.run(SKAction.animate(with: blastTextures1, timePerFrame: 1, resize: true, restore: true))
+                        char.run(SKAction.animate(with: blastTextures1, timePerFrame: 1))
                         let attack = SKSpriteNode(imageNamed: "sprite_blast0.png")
                         attack.run(SKAction.repeatForever(SKAction.animate(with: atkTextures, timePerFrame: 0.5)))
                         attack.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width:3, height:3))
                         attack.name = "atk"
                         attack.zPosition = 3
-                        attack.position = CGPoint(x: char.position.x + 5, y: char.position.y)
+                        attack.position = CGPoint(x: char.position.x + CGFloat(char.blastOffset), y: char.position.y)
                         attack.physicsBody!.affectedByGravity = false
-                        attack.physicsBody!.velocity.dx = 90
+                        attack.physicsBody!.velocity.dx = CGFloat(Float(90*char.speedMult))
                         attack.physicsBody!.categoryBitMask = 4
                         attack.physicsBody!.collisionBitMask = 8
                         attack.physicsBody!.contactTestBitMask = 8
@@ -297,15 +380,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                         char.charge = 0
                         char.chargeVal = 0
                         //char.size = CGSize(width: 50, height: 34)
-                        char.run(SKAction.animate(with: blastTextures2, timePerFrame: 1, resize: true, restore: true))
+                        char.run(SKAction.animate(with: blastTextures2, timePerFrame: 1))
                         let attack = SKSpriteNode(imageNamed: "sprite_blast0.png")
                         attack.run(SKAction.repeatForever(SKAction.animate(with: atkTextures, timePerFrame: 0.5)))
                         attack.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width:3, height:3))
                         attack.name = "atk"
                         attack.zPosition = 3
-                        attack.position = CGPoint(x: char.position.x + 5, y: char.position.y)
+                        attack.position = CGPoint(x: char.position.x + CGFloat(char.blastOffset), y: char.position.y)
                         attack.physicsBody!.affectedByGravity = false
-                        attack.physicsBody!.velocity.dx = 90
+                        attack.physicsBody!.velocity.dx = CGFloat(Float(90*char.speedMult))
                         attack.physicsBody!.categoryBitMask = 4
                         attack.physicsBody!.collisionBitMask = 8
                         attack.physicsBody!.contactTestBitMask = 8
@@ -325,8 +408,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     beam.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width:3, height:3))
                     beam.name = "beam"
                     beam.zPosition = 4
-                    beam.position = CGPoint(x: char.position.x + 10, y: char.position.y-6)
+                    beam.position = CGPoint(x: char.position.x + CGFloat(char.beamOffset), y: char.position.y-6)
                     beam.physicsBody!.affectedByGravity = false
+                    beam.physicsBody!.isDynamic = false
                     beam.physicsBody!.categoryBitMask = 4
                     beam.physicsBody!.collisionBitMask = 8
                     beam.physicsBody!.contactTestBitMask = 8
@@ -374,8 +458,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
-        let scoreLabel = SKLabelNode(fileNamed: "score")
-        scoreLabel!.text = String(score)
+        if char.energy > char.maxE
+        {
+            char.energy = char.maxE
+        }
+        if scoreLabel!.text != nil
+        {
+            scoreLabel.text = "Score: " + String(score)
+        }
+        if stats!.text != nil
+        {
+            stats.text = "Energy: "+String(char.energy)+"/"+String(char.maxE)+" | Multiplier: "+String(char.speedMult)
+        }
+
         let number = Int.random(in: 1 ..< 60)
         if number < 30 && children.count < 30{
             let bubble = SKSpriteNode(imageNamed: "sprite_bubble0.png")
@@ -391,7 +486,51 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             bubble.physicsBody!.contactTestBitMask = 32
             scene!.addChild(bubble)
         }
+        if char.over >= char.maxE
+        {
+            char.transform = 1
+            char.over = 0
+        }
+        if char.transform == 1
+        {
+            walkTextures = walkTexturesS
+            
+            standTextures = standTexturesS
+            backTextures = backTexturesS
+            forwardTextures = forwardTexturesS
+            
+            defTextures = defTexturesS
+            defTextures2 = defTextures2S
+            
+            chargeTextures = chargeTexturesS
+            
+            blastTextures1 = blastTextures1S
+            blastTextures2 = blastTextures2S
+            beamTextures1 = beamTextures1S
+            beamTextures2 = beamTextures2S
+            
+            atkTextures = atkTexturesS
+            
+            jumpTextures = jumpTexturesS
+            fallTextures = fallTexturesS
+            
+            char.run(SKAction.repeatForever(SKAction.animate(with: chargeTextures, timePerFrame: 0.3)))
+            if( char.maxE < 5000){
+                char.maxE += 500
+            }
+            if( char.speedMult < 3.0){
+                char.speedMult += 0.2
+                let round = Double(String(format: "%.1f", ceil(char.speedMult*100)/100))
+                char.speedMult = round!
+            }
+            if char.chargeRate < 20{
+                char.chargeRate += 5
+            }
+            char.beamOffset = 30
+            char.transform = 2
+        }
         energy.size = CGSize(width: self.size.width*CGFloat(Float(char.energy)/Float(char.maxE)), height: 20)
+        over.size = CGSize(width: self.size.width*CGFloat(Float(char.over)/Float(char.maxE)), height: 20)
         if char.beamAnim == 1 && children.contains(where: { $0.name?.contains("beam") ?? false }) == false{
             char.run(SKAction.repeatForever(SKAction.animate(with: standTextures, timePerFrame: 1)))
             char.beamAnim = 0
@@ -400,7 +539,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if char.beamAnim == 1{
                 char.run(SKAction.animate(with: beamTextures2, timePerFrame: 1))
                 if let beam = scene?.childNode(withName: "beam") as? SKSpriteNode{
-                    beam.size = CGSize(width: beam.size.width + 1, height: beam.size.height)
+                    beam.size = CGSize(width: beam.size.width + CGFloat(Float(1*char.speedMult)), height: beam.size.height)
                     if let beamHead = scene?.childNode(withName: "beamHead") as? SKSpriteNode{
                         beamHead.position = CGPoint(x: beam.position.x + beam.size.width-15, y: char.position.y-5)
                     }
@@ -419,9 +558,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             {
                 char.run(SKAction.repeatForever(SKAction.animate(with: beamTextures1, timePerFrame: 1)))
             }
-            if char.charge == 1 && char.def == 1 && char.energy < char.maxE && char.jump == 0
+            if char.charge == 1 && char.def == 1 && char.jump == 0
             {
-                char.energy += 10
+                if char.energy < char.maxE
+                {
+                    char.energy += char.chargeRate
+                }
+                if char.energy >= char.maxE && char.over < char.maxE
+                {
+                    char.over += char.chargeRate
+                }
             }
             if char.texture!.description.contains("sprite_goku11") && char.blastAnim == 1 {
                 char.blastAnim = 0
@@ -451,6 +597,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 char.jump = 0
             }
         }
+    }
+    
+    func transform(){
+        
     }
     
     func collisionBetween(atk: SKSpriteNode, object: SKSpriteNode) {

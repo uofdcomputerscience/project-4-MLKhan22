@@ -9,8 +9,11 @@ import SpriteKit
 import GameplayKit
 
 class Character: SKSpriteNode {
-    var blastOffset = 10
+    var transform = 0
+    
+    var blastOffset = 5
     var blastAnim = 0
+    var beamOffset = 20
     var beamAnim = 0
     var blast = 0
     
@@ -24,4 +27,9 @@ class Character: SKSpriteNode {
     var maxE = 1000
     var energy = 1000
     var over = 0
+    
+    var speedMult:Double = 1.0
+    
+    var chargeRate = 10
+    
 }
