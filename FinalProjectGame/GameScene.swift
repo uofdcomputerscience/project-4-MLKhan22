@@ -271,18 +271,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         guard let nodeA = contact.bodyA.node else { return }
         guard let nodeB = contact.bodyB.node else { return }
         
-        if nodeA.name == "atk" || nodeA.name == "beam" || nodeA.name == "beamHead" && nodeB.name != "bubble"{
+        if nodeA.name == "atk" || nodeA.name == "beam" || nodeA.name == "bHead" && nodeB.name != "bubble"{
             collisionBetween(atk: nodeA as! SKSpriteNode, object: nodeB as! SKSpriteNode)
-        } else if nodeB.name == "atk" || nodeB.name == "beam" || nodeB.name == "beamHead" && nodeA.name != "bubble"{
+        } else if nodeB.name == "atk" || nodeB.name == "beam" || nodeB.name == "bHead" && nodeA.name != "bubble"{
             collisionBetween(atk: nodeB as! SKSpriteNode, object: nodeA as! SKSpriteNode)
         }
         
-        if nodeA.name == "beam" || nodeA.name == "beamHead" {
+        if nodeA.name == "beam" || nodeA.name == "bHead" {
             if( nodeB.name == "bubble" ){
                 destroy(atk: nodeB as! SKSpriteNode)
                 score+=1
             }
-        } else if nodeB.name == "beam" || nodeB.name == "beamHead" {
+        } else if nodeB.name == "beam" || nodeB.name == "bHead" {
             if( nodeA.name == "bubble" ){
                 destroy(atk: nodeA as! SKSpriteNode)
                 score+=1
@@ -303,11 +303,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
         }
         if nodeA.name == "bubble" {
-            if( nodeB.name != "atk" && nodeB.name != "beam" && nodeB.name != "beamHead"){
+            if( nodeB.name != "atk" && nodeB.name != "beam" && nodeB.name != "bHead"){
                 destroy(atk: nodeA as! SKSpriteNode)
             }
         } else if nodeB.name == "bubble" {
-            if( nodeA.name != "atk" && nodeA.name != "beam" && nodeA.name != "beamHead"){
+            if( nodeA.name != "atk" && nodeA.name != "beam" && nodeA.name != "bHead"){
                 destroy(atk: nodeB as! SKSpriteNode)
             }
         }
@@ -415,14 +415,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                         //char.size = CGSize(width: 20, height: 30)
                     }
                 }
-                if name == "X" && char.chargeVal >= 20 && (char.energy - 200) >= 0  && char.def == 0  && char.jump == 0
+                if name == "X" && char.chargeVal >= 20 && (char.energy - 200) >= 0  && char.def == 0 //&& char.jump == 0
                 {
+                    char.physicsBody!.affectedByGravity = false
+                    char.physicsBody!.velocity.dy = 0
                     char.energy -= 200
                     char.beamAnim = 1
                     char.charge = 0
                     char.chargeVal = 0
-                    let beam = SKSpriteNode(imageNamed: "sprite_beam0.png")
                     let beamHead = SKSpriteNode(imageNamed: "sprite_beam1.png")
+                    let beam = SKSpriteNode(imageNamed: "sprite_beam0.png")
                     beam.anchorPoint = CGPoint(x: 0.0,y: 0.5)
                     beam.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width:3, height:3))
                     beam.name = "beam"
@@ -430,15 +432,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     beam.position = CGPoint(x: char.position.x + CGFloat(char.beamOffset), y: char.position.y-6)
                     beam.physicsBody!.affectedByGravity = false
                     beam.physicsBody!.isDynamic = false
+                    beam.physicsBody!.allowsRotation = false
                     beam.physicsBody!.categoryBitMask = 4
                     beam.physicsBody!.collisionBitMask = 8
                     beam.physicsBody!.contactTestBitMask = 8
                     beamHead.anchorPoint = CGPoint(x: 0.0,y: 0.5)
                     beamHead.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width:5, height:5))
-                    beamHead.name = "beamHead"
+                    beamHead.name = "bHead"
                     beamHead.zPosition = 5
                     beamHead.position = CGPoint(x: beam.position.x + beam.size.width-15, y: char.position.y-5)
                     beamHead.physicsBody!.affectedByGravity = false
+                    beam.physicsBody!.isDynamic = false
+                    beamHead.physicsBody!.allowsRotation = false
                     beamHead.physicsBody!.categoryBitMask = 4
                     beamHead.physicsBody!.collisionBitMask = 8
                     beamHead.physicsBody!.contactTestBitMask = 8
@@ -503,7 +508,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             bubble.zPosition = 6
             bubble.position = CGPoint(x: self.size.width, y: self.size.height/3)
             bubble.physicsBody!.affectedByGravity = false
-            bubble.physicsBody!.velocity.dx = -50
+            bubble.physicsBody!.velocity.dx = -75
             bubble.physicsBody!.velocity.dy = (CGFloat(number) - 15) * 3
             bubble.physicsBody!.categoryBitMask = 12
             bubble.physicsBody!.collisionBitMask = 32
@@ -555,20 +560,34 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         energy.size = CGSize(width: self.size.width*CGFloat(Float(char.energy)/Float(char.maxE)), height: 20)
         over.size = CGSize(width: self.size.width*CGFloat(Float(char.over)/Float(char.maxE)), height: 20)
-        if char.beamAnim == 1 && children.contains(where: { $0.name?.contains("beam") ?? false }) == false{
+        if char.beamAnim == 1 && children.contains(where: { $0.name?.contains("beam") ?? false }) == false && children.contains(where: { $0.name?.contains("bHead") ?? false }) == false{
+            char.physicsBody!.affectedByGravity = true
+            char.physicsBody!.velocity.dx = 0
             char.run(SKAction.repeatForever(SKAction.animate(with: standTextures, timePerFrame: 1)))
             char.beamAnim = 0
         }
         else{
             if char.beamAnim == 1{
-                char.run(SKAction.animate(with: beamTextures2, timePerFrame: 1))
-                if let beam = scene?.childNode(withName: "beam") as? SKSpriteNode{
-                    beam.size = CGSize(width: beam.size.width + CGFloat(Float(1*char.speedMult)), height: beam.size.height)
-                    if let beamHead = scene?.childNode(withName: "beamHead") as? SKSpriteNode{
-                        beamHead.position = CGPoint(x: beam.position.x + beam.size.width-15, y: char.position.y-5)
+                if (children.contains(where: { $0.name?.contains("beam") ?? false }) == true && children.contains(where: { $0.name?.contains("bHead") ?? false }) == true){
+                    char.physicsBody!.velocity.dx = -5
+                    char.run(SKAction.animate(with: beamTextures2, timePerFrame: 1))
+                    if let beam = scene?.childNode(withName: "beam") as? SKSpriteNode{
+                        beam.position = CGPoint(x: char.position.x + CGFloat(char.beamOffset), y: char.position.y-6)
+                        beam.size = CGSize(width: beam.size.width + CGFloat(Float(1*char.speedMult)), height: beam.size.height)
+                        if let beamHead = scene?.childNode(withName: "bHead") as? SKSpriteNode{
+                            beamHead.position = CGPoint(x: beam.position.x + beam.size.width-15, y: char.position.y-5)
+                        }
+                        else{
+                            destroy(atk: beam)
+                        }
                     }
-                    else{
+                }
+                else{
+                    if let beam = scene?.childNode(withName: "beam") as? SKSpriteNode{
                         destroy(atk: beam)
+                    }
+                    if let beamHead = scene?.childNode(withName: "bHead") as? SKSpriteNode{
+                        destroy(atk: beamHead)
                     }
                 }
             }
@@ -596,7 +615,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if char.texture!.description.contains("sprite_goku11") && char.blastAnim == 1 {
                 char.blastAnim = 0
             }
-            if char.physicsBody!.velocity.dy > 0 && char.jump > 0 && char.blastAnim == 0 {
+            if char.physicsBody!.velocity.dy > 1 && char.jump > 0 && char.blastAnim == 0 {
                 if char.def == 0
                 {
                     char.run(SKAction.repeatForever(SKAction.animate(with: jumpTextures, timePerFrame: 1)))
@@ -606,7 +625,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     char.run(SKAction.repeatForever(SKAction.animate(with: defTextures2, timePerFrame: 1)))
                 }
             }
-            if char.physicsBody!.velocity.dy < 0 && char.jump > 0 && char.blastAnim == 0 {
+            if char.physicsBody!.velocity.dy < -1 && char.jump > 0 && char.blastAnim == 0 {
                 if char.def == 0
                 {
                     char.run(SKAction.repeatForever(SKAction.animate(with: fallTextures, timePerFrame: 1)))
@@ -616,8 +635,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     char.run(SKAction.repeatForever(SKAction.animate(with: defTextures2, timePerFrame: 1)))
                 }
             }
-            if char.physicsBody!.velocity.dy == 0 && char.jump > 0{
-                char.run(SKAction.repeatForever(SKAction.animate(with: standTextures, timePerFrame: 1)))
+            if char.physicsBody!.velocity.dy >= -1 && char.physicsBody!.velocity.dy <= 1 && char.jump > 0{
+                if char.physicsBody!.velocity.dx <= 20 && char.physicsBody!.velocity.dx >= -20{
+                    char.run(SKAction.repeatForever(SKAction.animate(with: standTextures, timePerFrame: 1)))
+                }
+                else if char.physicsBody!.velocity.dx > 20{
+                    char.run(SKAction.repeatForever(SKAction.animate(with: forwardTextures, timePerFrame: 1)))
+                }
+                else if char.physicsBody!.velocity.dx < -20{
+                    char.run(SKAction.repeatForever(SKAction.animate(with: backTextures, timePerFrame: 1)))
+                }
                 char.jump = 0
             }
         }
@@ -628,7 +655,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func collisionBetween(atk: SKSpriteNode, object: SKSpriteNode) {
-        if atk.name == "atk" || atk.name == "beam" || atk.name == "beamHead" || atk.name == "bubble"
+        if atk.name == "atk" || atk.name == "beam" || atk.name == "bHead" || atk.name == "bubble"
         {
             destroy(atk: atk)
         }
